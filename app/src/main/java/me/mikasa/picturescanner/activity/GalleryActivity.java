@@ -32,7 +32,7 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
         OnRecyclerViewItemClickListener {
     private Context mContext;
     private static String galleryUrl;
-    private static final int count=6;
+    private static final int count=6;//循环添加图片数据的次数
     private List<GalleryItem>itemList=new ArrayList<>();
     private GalleryAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -53,13 +53,13 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
     @Override
     protected void initView() {
         mRecyclerView=findViewById(R.id.gallery_rv);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,3));
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,3));//setLayoutManager()
+        mRecyclerView.setAdapter(mAdapter);//setAdapter()
     }
 
     @Override
     protected void initListener() {
-        mAdapter.setOnRecyclerViewItemClickListener(this);
+        mAdapter.setOnRecyclerViewItemClickListener(this);//在recyclerview的adapter中设置点击监听事件
     }
     private List<GalleryItem>getGalleryItems(){
         List<GalleryItem>items;
@@ -81,8 +81,8 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
         }
     }
     private void initFile(){
-        //纯属个人练习IO操作，可以忽略
-        //getBitmapPathsFromAssets
+        //此部分纯属个人IO练习，可以忽略
+        //从assets中读取图片资源
         AssetManager am=mContext.getAssets();
         List<String> bitmapPaths=new ArrayList<>();
         try {
@@ -95,7 +95,7 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
         }catch (IOException e){
             e.printStackTrace();
         }
-        //以字节流的形式将jpg从assets写入文件夹mygallery
+        //以字节流byte的形式将assets中的图片资源写入文件夹zzgallery
         try {
             File galleryDir=new File(galleryUrl);
             galleryDir.mkdir();
@@ -131,6 +131,7 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
             e.printStackTrace();
         }
     }
+    //判断文件是不是图片文件
     private boolean isImageFile(String path){
         if (path.endsWith(".jpg")||path.endsWith(".png")||path.endsWith(".jpeg")||
                 path.endsWith(".gif")||path.endsWith(".gif")){
@@ -150,14 +151,15 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
                 initFile();//初始化图片文件夹
             }
         }
+        //从指定文件夹中读取图片数据
         itemList=getGalleryItems();
         List<GalleryItem>list=new ArrayList<>();
-        for (int i=0;i<count;i++){
+        for (int i=0;i<count;i++){//循环添加图片数据
             list.addAll(itemList);
         }
         itemList.clear();
         itemList=list;
-        mAdapter.updateData(itemList);
+        mAdapter.updateData(itemList);//将数据与adapter绑定
     }
 
     @Override
