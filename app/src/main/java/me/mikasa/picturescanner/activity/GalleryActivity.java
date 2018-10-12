@@ -71,8 +71,9 @@ public class GalleryActivity extends BaseActivity implements PermissionListener,
                 GalleryItem item=new GalleryItem();
                 if (isImageFile(file.getPath())){
                     item.setImgUrl(file.getAbsolutePath());
+                    items.add(item);
                 }
-                items.add(item);
+           
             }
             return items;
         }else {
